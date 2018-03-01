@@ -1,6 +1,3 @@
 def autocomplete(c, prefix):
-    prefix = prefix + '%'
-    print prefix
-
-    c.execute("SELECT DISTINCT gene FROM variants WHERE gene LIKE ?", (prefix,))
-    return c.fetchall()
+    c.execute("SELECT DISTINCT gene FROM variants WHERE gene LIKE ?", (prefix.upper() + '%',))
+    return [row['gene'] for row in c.fetchall()]
