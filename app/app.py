@@ -8,7 +8,7 @@ from models import searchVariants, autocompleteGenes
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/genes/suggestions")
+@app.route("/v0/genes/suggestions")
 def suggest():
     prefix = request.args.get('prefix')
     c = get_connection().cursor()
@@ -17,7 +17,7 @@ def suggest():
         "results": genes,
     })
 
-@app.route("/variants")
+@app.route("/v0/variants")
 def search():
     gene = request.args.get('gene')
     c = get_connection().cursor()
