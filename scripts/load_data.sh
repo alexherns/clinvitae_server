@@ -1,13 +1,20 @@
-VARIANTS_DATA=$1
-DATA_PATH=$2
+set -e
 
 SOURCE_DIR=`dirname $BASH_SOURCE`
+
+DATA_PATH=$1
+DOWNLOAD_PATH="$DATA_PATH/variants.zip"
+VARIANTS_DATA="$DATA_PATH/variant_results.tsv"
 VARIANT_SAMPLE_FILE="$DATA_PATH/variant_sampling.tsv"
 DB_SCHEMA_FILE="$DATA_PATH/schema.sql"
 DB_FILE="$DATA_PATH/variants.db"
 
 echo "Will export database to $DB_FILE"
 
+# download data from server
+wget -O $DOWNLOAD_PATH http://clinvitae.invitae.com/download
+# unzip
+unzip -d $DATA_PATH $DOWNLOAD_PATH 
 # lowercase and covert spaces to underscore
 head -n1 $VARIANTS_DATA | tr '[:upper:] ' '[:lower:]_' > $VARIANT_SAMPLE_FILE
 # grab some data
